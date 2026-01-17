@@ -18,8 +18,8 @@ declare global {
 
     }
     interface ElectronAPI {
-        pickFolder(): Promise<FileList>
-        refresh(basePath: string): Promise<FileList>
+        pickFolder(compareByName: boolean, compareBySize: boolean, compareByHash: boolean): Promise<FileList|null>
+        refresh(basePath: string, compareByName: boolean, compareBySize: boolean, compareByHash: boolean): Promise<FileList|null>
         deleteFiles(basePath: string, files: DuplicateFile[]): Promise<boolean>
     }
 

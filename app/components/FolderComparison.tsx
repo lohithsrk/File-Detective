@@ -2,15 +2,22 @@ import React, {useCallback, useEffect, useMemo, useState} from "react";
 import {FolderSelector} from "./FolderSelector";
 import {FolderTree, TreeNode} from "./FolderTree";
 import {FilePreview, PreviewFile} from "./FilePreview";
-import {ArrowLeftRight, FolderTree as FolderTreeIcon, X} from "lucide-react";
+import {ArrowLeftRight, FileText, Fingerprint, FolderTree as FolderTreeIcon, Scale, Search, X} from "lucide-react";
 import {toast} from "sonner";
 import {cn} from '@/app/lib/utils';
 import {cva} from 'class-variance-authority';
 import {LoadingOverlay} from "@/app/components/LoadingOverlay";
+import {Checkbox} from "@/app/components/ui/checkbox";
 
 interface HeaderProps {
     title: string;
     className?: string;
+}
+
+interface DuplicateCriteria {
+    byName: boolean;
+    byHash: boolean;
+    bySize: boolean;
 }
 
 export const Header: React.FC<HeaderProps> = ({title, className}) => {
@@ -120,12 +127,6 @@ export const useAuth = () => {
     return {...state, login, logout};
 }
 
-const dummyImages: Record<string, string> = {
-    "logo.png": "https://images.unsplash.com/photo-1614680376593-902f74cf0d41?w=200&h=200&fit=crop",
-    "favicon.ico": "https://images.unsplash.com/photo-1618401471353-b98afee0b2eb?w=64&h=64&fit=crop",
-    "og-image.png": "https://images.unsplash.com/photo-1557683316-973673baf926?w=1200&h=630&fit=crop",
-};
-
 const countByStatus = (nodes: TreeNode[], status: string): number => {
     let count = 0;
     for (const node of nodes) {
@@ -161,6 +162,25 @@ export const FolderComparison = () => {
     const [isImportingRight, setIsImportingRight] = useState(false);
     const [isMovingLeft, setIsMovingLeft] = useState(false);
     const [isMovingRight, setIsMovingRight] = useState(false);
+    const [criteria, setCriteria] = useState<DuplicateCriteria>({
+        byName: true,
+        byHash: false,
+        bySize: false,
+    });
+
+    const handleCriteriaChange = (key: keyof DuplicateCriteria) => {
+        setCriteria(prev => {
+            const newCriteria = { ...prev, [key]: !prev[key] };
+            // Ensure at least one criterion is selected
+            if (!newCriteria.byName && !newCriteria.byHash && !newCriteria.bySize) {
+                toast.error("At least one criterion must be selected");
+                return prev;
+            }
+            return newCriteria;
+        });
+        // Reset selections when criteria change
+        // setSelectedFiles(new Set());
+    };
 
     const stats = useMemo(() => ({
         added: countByStatus(folder2Data, "added"),
@@ -173,11 +193,12 @@ export const FolderComparison = () => {
     const addedFiles = useMemo(() => collectFilesByStatus(folder2Data, "added"), [folder2Data]);
 
     const handleFolder1Select = async () => {
-        const fileList = await window.electronAPI.pickFolder()
-        setIsImportingLeft(true);
-
-        let folderPath = "";
-        for (let i = 0; i < fileList.length; i++) {
+        // const fileList = await window.electronAPI.pickFolder()
+        // if(fileList == null) return;
+        // setIsImportingLeft(true);
+        //
+        // let folderPath = "";
+        // for (let i = 0; i < fileList.length; i++) {
             //   const file = fileList[i];
             //   if (!folderPath && file.path.includes("/")) {
             //     folderPath = file.path.split("/")[0];
@@ -186,10 +207,10 @@ export const FolderComparison = () => {
             // }
             // setFolder1Name(folderPath || "Folder A");
             // setSelectedFilesLeft(new Set());
-        }
+        // }
 
         setIsImportingLeft(false);
-        toast.success(`Imported "${folderPath || "Folder A"}" successfully`);
+        // toast.success(`Imported "${folderPath || "Folder A"}" successfully`);
     }
 
     const handleFolder2Select = async () => {
@@ -280,6 +301,88 @@ export const FolderComparison = () => {
             <LoadingOverlay isLoading={isMovingRight} message="Copying files to old folder..." />
             {/* File Preview Modal */}
             <FilePreview file={previewFile} onClose={() => setPreviewFile(null)}/>
+
+            {/* Detection Criteria Checklist */}
+            <div className="glass-card p-4">
+                <div className="flex items-center gap-2 mb-3">
+                    <Search className="w-5 h-5 text-primary" />
+                    <h3 className="font-semibold">Duplicate Detection Criteria</h3>
+                </div>
+                <p className="text-sm text-muted-foreground mb-4">
+                    Select the criteria to identify duplicate files. Files matching ALL selected criteria will be grouped as duplicates.
+                </p>
+
+                <div className="flex flex-wrap gap-4">
+                    {/* By File Name */}
+                    <label className={cn(
+                        "flex items-center gap-3 px-4 py-3 rounded-lg border cursor-pointer transition-all",
+                        criteria.byName
+                            ? "bg-primary/10 border-primary"
+                            : "bg-secondary/50 border-border hover:border-primary/50"
+                    )}>
+                        <Checkbox
+                            checked={criteria.byName}
+                            onCheckedChange={() => handleCriteriaChange('byName')}
+                            className="data-[state=checked]:bg-primary data-[state=checked]:border-primary"
+                        />
+                        <FileText className={cn("w-5 h-5", criteria.byName ? "text-primary" : "text-muted-foreground")} />
+                        <div>
+                            <p className={cn("font-medium", criteria.byName ? "text-primary" : "text-foreground")}>File Name</p>
+                            <p className="text-xs text-muted-foreground">Match files with the same name</p>
+                        </div>
+                    </label>
+
+                    {/* By Hash */}
+                    <label className={cn(
+                        "flex items-center gap-3 px-4 py-3 rounded-lg border cursor-pointer transition-all",
+                        criteria.byHash
+                            ? "bg-primary/10 border-primary"
+                            : "bg-secondary/50 border-border hover:border-primary/50"
+                    )}>
+                        <Checkbox
+                            checked={criteria.byHash}
+                            onCheckedChange={() => handleCriteriaChange('byHash')}
+                            className="data-[state=checked]:bg-primary data-[state=checked]:border-primary"
+                        />
+                        <Fingerprint className={cn("w-5 h-5", criteria.byHash ? "text-primary" : "text-muted-foreground")} />
+                        <div>
+                            <p className={cn("font-medium", criteria.byHash ? "text-primary" : "text-foreground")}>File Hash</p>
+                            <p className="text-xs text-muted-foreground">Match files with identical content</p>
+                        </div>
+                    </label>
+
+                    {/* By File Size */}
+                    <label className={cn(
+                        "flex items-center gap-3 px-4 py-3 rounded-lg border cursor-pointer transition-all",
+                        criteria.bySize
+                            ? "bg-primary/10 border-primary"
+                            : "bg-secondary/50 border-border hover:border-primary/50"
+                    )}>
+                        <Checkbox
+                            checked={criteria.bySize}
+                            onCheckedChange={() => handleCriteriaChange('bySize')}
+                            className="data-[state=checked]:bg-primary data-[state=checked]:border-primary"
+                        />
+                        <Scale className={cn("w-5 h-5", criteria.bySize ? "text-primary" : "text-muted-foreground")} />
+                        <div>
+                            <p className={cn("font-medium", criteria.bySize ? "text-primary" : "text-foreground")}>File Size</p>
+                            <p className="text-xs text-muted-foreground">Match files with the same size</p>
+                        </div>
+                    </label>
+                </div>
+
+                {/* Active criteria summary */}
+                <div className="mt-4 p-2 bg-secondary/50 rounded-lg">
+                    <p className="text-xs text-muted-foreground">
+                        <span className="font-medium text-foreground">Active criteria:</span>{' '}
+                        {[
+                            criteria.byName && 'File Name',
+                            criteria.byHash && 'File Hash',
+                            criteria.bySize && 'File Size'
+                        ].filter(Boolean).join(' + ') || 'None'}
+                    </p>
+                </div>
+            </div>
 
             {/* Folder Selectors */}
             <div className="grid md:grid-cols-2 gap-6 relative">

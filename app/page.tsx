@@ -14,48 +14,6 @@ const queryClient = new QueryClient();
 type Tab = "duplicates" | "compare";
 
 export default function Home() {
-    // ----- APP STATE -----
-    const [hasScanned, setHasScanned] = useState(false)
-    const [selectedSource, setSelectedSource] = useState<string | null>(null)
-    const [selectedFiles, setSelectedFiles] = useState<string[]>([])
-
-    // ----- MOCK DATA (replace with IPC results) -----
-    const sources = [
-        { name: 'A', count: 2 },
-        { name: 'B', count: 2 }
-    ]
-
-    const duplicateFiles = ['1.txt', '2.txt']
-
-    // Disable other sources once one is selected
-    const sourceModels = sources.map(src => ({
-        ...src,
-        selected: src.name === selectedSource,
-        disabled: selectedSource !== null && src.name !== selectedSource
-    }))
-
-    // ----- ACTIONS -----
-    const startScan = async () => {
-        await window.electronAPI.pickFolder()
-        setHasScanned(true)
-    }
-
-    const deleteFromSource = () => {
-        alert(`Delete duplicates from ${selectedSource}`)
-    }
-
-    const deleteSelectedFiles = () => {
-        alert(`Delete files: ${selectedFiles.join(', ')}`)
-    }
-
-    const toggleFile = (file: string) => {
-        setSelectedFiles(prev =>
-            prev.includes(file)
-                ? prev.filter(f => f !== file)
-                : [...prev, file]
-        )
-    }
-
     const [activeTab, setActiveTab] = useState<Tab>("duplicates");
 
     return (
@@ -72,7 +30,7 @@ export default function Home() {
 
                     <div className="relative z-10 container max-w-5xl mx-auto px-4 py-8">
                         {/* Header */}
-                        <header className="text-center mb-12 animate-slide-up">
+                        <header className="text-center mb-8 animate-slide-up">
                             {/*<div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-6">*/}
                             {/*    <Sparkles className="w-4 h-4 text-primary" />*/}
                             {/*    <span className="text-sm font-medium text-primary">File Management Tool</span>*/}
@@ -129,7 +87,7 @@ export default function Home() {
                         </main>
 
                         {/* Footer */}
-                        <footer className="text-center mt-16 pb-8">
+                        <footer className="text-center mt-10 pb-8">
                             <p className="text-xs text-muted-foreground/50">
                                 Drag and drop folders or click to browse • All processing happens locally
                             </p>

@@ -9,11 +9,14 @@ import {
   ChevronRight,
   Copy,
   Eye,
+  FileText,
+  Fingerprint,
   Folder,
   FolderTree,
   HardDrive,
   Hash,
   Loader2,
+  Scale,
   Search,
   Shield,
   Square,
@@ -38,6 +41,12 @@ interface DuplicateGroup {
   size: number;
   files: FileData[];
   subfolders: string[];
+}
+
+interface DuplicateCriteria {
+  byName: boolean;
+  byHash: boolean;
+  bySize: boolean;
 }
 
 interface FileWithStatus {
@@ -243,17 +252,36 @@ export const DuplicatesFinder = () => {
   const [previewFile, setPreviewFile] = useState<PreviewFile | null>(null);
   const [selectedFiles, setSelectedFiles] = useState<Set<string>>(new Set());
   const [preferredFolders, setPreferredFolders] = useState<Set<string>>(new Set());
+  const [criteria, setCriteria] = useState<DuplicateCriteria>({
+    byName: true,
+    byHash: false,
+    bySize: false,
+  });
+
+  const handleCriteriaChange = (key: keyof DuplicateCriteria) => {
+    setCriteria(prev => {
+      const newCriteria = { ...prev, [key]: !prev[key] };
+      // Ensure at least one criterion is selected
+      if (!newCriteria.byName && !newCriteria.byHash && !newCriteria.bySize) {
+        toast.error("At least one criterion must be selected");
+        return prev;
+      }
+      return newCriteria;
+    });
+    // Reset selections when criteria change
+    setSelectedFiles(new Set());
+  };
 
   const handleFolderSelect = async () => {
-    const fileList = await window.electronAPI.pickFolder()
     setIsImporting(true);
-    loadDuplicates(fileList)
+    const fileList = await window.electronAPI.pickFolder(criteria.byName, criteria.bySize, criteria.byHash)
+    fileList && loadDuplicates(fileList)
   };
 
   const refreshDuplicates = async () => {
     setIsImporting(true);
-    const fileList = await window.electronAPI.refresh(folderName)
-    loadDuplicates(fileList)
+    const fileList = await window.electronAPI.refresh(folderName, criteria.byName, criteria.bySize, criteria.byHash)
+    fileList && loadDuplicates(fileList)
   }
 
   const loadDuplicates = (fileList: FileList) => {
@@ -473,40 +501,122 @@ export const DuplicatesFinder = () => {
 
         {/* File Preview Modal */}
         <FilePreview file={previewFile} onClose={() => setPreviewFile(null)} />
+        {/* Detection Criteria Checklist */}
+        <div className="glass-card p-4">
+          <div className="flex items-center gap-2 mb-3">
+            <Search className="w-5 h-5 text-primary"/>
+            <h3 className="font-semibold">Duplicate Detection Criteria</h3>
+          </div>
+          <p className="text-sm text-muted-foreground mb-4">
+            Select the criteria to identify duplicate files. Files matching ALL selected criteria will be grouped as
+            duplicates.
+          </p>
 
-        <div className="grid md:grid-cols-2 gap-6">
+          <div className="flex flex-wrap gap-4">
+            {/* By File Name */}
+            <label className={cn(
+                "flex items-center gap-3 px-4 py-3 rounded-lg border cursor-pointer transition-all",
+                criteria.byName
+                    ? "bg-primary/10 border-primary"
+                    : "bg-secondary/50 border-border hover:border-primary/50"
+            )}>
+              <Checkbox
+                  checked={criteria.byName}
+                  onCheckedChange={() => handleCriteriaChange('byName')}
+                  className="data-[state=checked]:bg-primary data-[state=checked]:border-primary"
+              />
+              <FileText className={cn("w-5 h-5", criteria.byName ? "text-primary" : "text-muted-foreground")}/>
+              <div>
+                <p className={cn("font-medium", criteria.byName ? "text-primary" : "text-foreground")}>File Name</p>
+                <p className="text-xs text-muted-foreground">Match files with the same name</p>
+              </div>
+            </label>
+
+            {/* By Hash */}
+            <label className={cn(
+                "flex items-center gap-3 px-4 py-3 rounded-lg border cursor-pointer transition-all",
+                criteria.byHash
+                    ? "bg-primary/10 border-primary"
+                    : "bg-secondary/50 border-border hover:border-primary/50"
+            )}>
+              <Checkbox
+                  checked={criteria.byHash}
+                  onCheckedChange={() => handleCriteriaChange('byHash')}
+                  className="data-[state=checked]:bg-primary data-[state=checked]:border-primary"
+              />
+              <Fingerprint className={cn("w-5 h-5", criteria.byHash ? "text-primary" : "text-muted-foreground")}/>
+              <div>
+                <p className={cn("font-medium", criteria.byHash ? "text-primary" : "text-foreground")}>File Hash</p>
+                <p className="text-xs text-muted-foreground">Match files with identical content</p>
+              </div>
+            </label>
+
+            {/* By File Size */}
+            <label className={cn(
+                "flex items-center gap-3 px-4 py-3 rounded-lg border cursor-pointer transition-all",
+                criteria.bySize
+                    ? "bg-primary/10 border-primary"
+                    : "bg-secondary/50 border-border hover:border-primary/50"
+            )}>
+              <Checkbox
+                  checked={criteria.bySize}
+                  onCheckedChange={() => handleCriteriaChange('bySize')}
+                  className="data-[state=checked]:bg-primary data-[state=checked]:border-primary"
+              />
+              <Scale className={cn("w-5 h-5", criteria.bySize ? "text-primary" : "text-muted-foreground")}/>
+              <div>
+                <p className={cn("font-medium", criteria.bySize ? "text-primary" : "text-foreground")}>File Size</p>
+                <p className="text-xs text-muted-foreground">Match files with the same size</p>
+              </div>
+            </label>
+          </div>
+
+          {/* Active criteria summary */}
+          <div className="mt-4 p-2 bg-secondary/50 rounded-lg">
+            <p className="text-xs text-muted-foreground">
+              <span className="font-medium text-foreground">Active criteria:</span>{' '}
+              {[
+                criteria.byName && 'File Name',
+                criteria.byHash && 'File Hash',
+                criteria.bySize && 'File Size'
+              ].filter(Boolean).join(' + ') || 'None'}
+            </p>
+          </div>
+        </div>
+
+        <div className={cn("grid gap-6", folderName.length > 0 ? "md:grid-cols-2" : "md:grid-cols-1")}>
           <FolderSelector
               label="Select folder to scan"
               onFolderSelect={handleFolderSelect}
               selectedFolder={folderName}
           />
 
-          <div className="glass-card p-6 flex flex-col justify-center">
+          {folderName.length > 0 && (<div className="glass-card p-6 flex flex-col justify-center">
             <div className="grid grid-cols-4 gap-4 text-center">
               <div>
                 <div className="flex items-center justify-center gap-1 mb-1">
-                  <Hash className="w-4 h-4 text-warning" />
+                  <Hash className="w-4 h-4 text-warning"/>
                 </div>
                 <p className="text-2xl font-bold text-warning">{stats.groups}</p>
                 <p className="text-xs text-muted-foreground mt-1">Groups</p>
               </div>
               <div>
                 <div className="flex items-center justify-center gap-1 mb-1">
-                  <Copy className="w-4 h-4 text-foreground" />
+                  <Copy className="w-4 h-4 text-foreground"/>
                 </div>
                 <p className="text-2xl font-bold text-foreground">{stats.totalFiles}</p>
                 <p className="text-xs text-muted-foreground mt-1">Files</p>
               </div>
               <div>
                 <div className="flex items-center justify-center gap-1 mb-1">
-                  <FolderTree className="w-4 h-4 text-primary" />
+                  <FolderTree className="w-4 h-4 text-primary"/>
                 </div>
                 <p className="text-2xl font-bold text-primary">{stats.subfolders}</p>
                 <p className="text-xs text-muted-foreground mt-1">Subfolders</p>
               </div>
               <div>
                 <div className="flex items-center justify-center gap-1 mb-1">
-                  <HardDrive className="w-4 h-4 text-destructive" />
+                  <HardDrive className="w-4 h-4 text-destructive"/>
                 </div>
                 <p className="text-2xl font-bold text-destructive">
                   {formatFileSize(stats.wastedSpace)}
@@ -514,7 +624,7 @@ export const DuplicatesFinder = () => {
                 <p className="text-xs text-muted-foreground mt-1">Wasted</p>
               </div>
             </div>
-          </div>
+          </div>)}
         </div>
 
         {/* Preferred Folders Selection */}
@@ -623,7 +733,7 @@ export const DuplicatesFinder = () => {
         )}
 
         {/* Duplicate Groups */}
-        <div className="glass-card p-4">
+        {folderName.length >0  && (<div className="glass-card p-4">
           <div className="flex items-center gap-2 mb-4 pb-3 border-b border-border/50">
             <Copy className="w-5 h-5 text-warning" />
             <h3 className="font-semibold">Duplicate Files by Subfolder</h3>
@@ -662,7 +772,7 @@ export const DuplicatesFinder = () => {
                 ))}
               </div>
           )}
-        </div>
+        </div>)}
       </div>
   );
 };
