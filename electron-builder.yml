@@ -1,0 +1,20 @@
+appId: com.lohith.duplicatefinder
+productName: Duplicate Finder
+
+directories:
+  output: dist
+
+files:
+  - electron/**/*
+  - renderer/out/**/*
+  - package.json
+
+extraMetadata:
+  main: electron/main.js
+
+win:
+  target:
+    - portable
+
+  # ✅ THIS replaces rcedit
+  signAndEditExecutable: false
