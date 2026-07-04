@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 18, "column": 0}, "map": {"version":3,"sources":["file:///C:/Users/w136667/Documents/duplicates-finder/renderer/app/page.tsx"],"sourcesContent":["import Image from \"next/image\";\n\nexport default function Home() {\n  const pick = async () => {\n    const path = await window.electronAPI.pickFolder()\n    alert(path)\n  }\n\n  return <button onClick={pick}>Pick Folder</button>\n}"],"names":[],"mappings":";;;;;;AAEe,SAAS;IACtB,MAAM,OAAO;QACX,MAAM,OAAO,MAAM,OAAO,WAAW,CAAC,UAAU;QAChD,MAAM;IACR;IAEA,qBAAO,0PAAC;QAAO,SAAS;kBAAM;;;;;;AAChC"}}]
+}

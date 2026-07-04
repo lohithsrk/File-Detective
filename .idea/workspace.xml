@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="b5bdd824-8e1d-4aa5-8227-ea98399b41a8" name="Changes" comment="add initial project configuration files and implement duplicate file finder functionality" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CopilotPersistence">
+    <persistenceIdMap>
+      <entry key="_C:/Users/w136667/Documents/duplicates-finder" value="37cYo2KXI4XnCASFq01sh0HwovL" />
+    </persistenceIdMap>
+  </component>
+  <component name="EmbeddingIndexingInfo">
+    <option name="cachedIndexableFilesCount" value="100" />
+    <option name="fileBasedEmbeddingIndicesEnabled" value="true" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="develop1" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RESET_MODE" value="HARD" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;lohithsrk&quot;
+  }
+}</component>
+  <component name="GitRewordedCommitMessages">
+    <option name="commitMessagesMapping">
+      <RewordedCommitMessageMapping>
+        <option name="originalMessage" value="Add duplicate detection criteria options and update folder selection logic" />
+        <option name="rewordedMessage" value="Add duplicate detection criteria options and update folder selection logic" />
+      </RewordedCommitMessageMapping>
+    </option>
+    <option name="currentCommit" value="1" />
+    <option name="onto" value="184f6c8e98029c60a1840b5246b1647bd0a3c2b1" />
+  </component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/lohithsrk/folder-buddy.git&quot;,
+    &quot;accountId&quot;: &quot;de6cb942-1a20-41db-91b6-934b20f83074&quot;
+  }
+}</component>
+  <component name="McpProjectServerCommands">
+    <commands />
+    <urls />
+  </component>
+  <component name="OptimizeOnSaveOptions">
+    <option name="myRunOnSave" value="true" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 2
+}</component>
+  <component name="ProjectId" id="37cYo2KXI4XnCASFq01sh0HwovL" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="autoscrollFromSource" value="true" />
+    <option name="autoscrollToSource" value="true" />
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="openDirectoriesWithSingleClick" value="true" />
+    <option name="showExcludedFiles" value="false" />
+    <option name="showLibraryContents" value="true" />
+    <option name="showScratchesAndConsoles" value="false" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;JavaScript Debug.index.html.executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.MCP Project settings loaded&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;develop&quot;,
+    &quot;javascript.preferred.runtime.type.id&quot;: &quot;node&quot;,
+    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/w136667/Documents/duplicates-finder&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;yarn&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\w136667\\Documents\\duplicates-finder\\renderer\\node_modules\\typescript\\lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecapSpentCounter">
+    <option name="endsOfQuotaMs" value="1769344229647" />
+    <option name="spentUsd" value="0.34768584" />
+  </component>
+  <component name="RecapUselessUpdatesCounter">
+    <option name="suspendCountdown" value="0" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\w136667\Documents\duplicates-finder" />
+      <recent name="C:\Users\w136667\Documents\duplicates-finder\renderer\app" />
+      <recent name="C:\Users\w136667\Documents\duplicates-finder\renderer\app\components" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\w136667\Documents\duplicates-finder" />
+      <recent name="C:\Users\w136667\Documents\duplicates-finder\renderer" />
+      <recent name="C:\Users\w136667\Documents\duplicates-finder\electron" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="index.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63343/duplicates-finder/renderer/out/index.html" useBuiltInWebServerPort="true">
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JavaScript Debug.index.html" />
+        <item itemvalue="JavaScript Debug.index.html" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-d6986cc7102b-9b0f141eb926-JavaScript-WS-253.29346.143" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="b5bdd824-8e1d-4aa5-8227-ea98399b41a8" name="Changes" comment="" />
+      <created>1767203998584</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1767203998584</updated>
+      <workItem from="1767204000998" duration="25124000" />
+      <workItem from="1768477016458" duration="5043000" />
+      <workItem from="1768484302921" duration="39560000" />
+      <workItem from="1769246258862" duration="39000" />
+      <workItem from="1771052013772" duration="3648000" />
+      <workItem from="1771057522529" duration="551000" />
+    </task>
+    <task id="LOCAL-00001" summary="Initial commit">
+      <option name="closed" value="true" />
+      <created>1768630391695</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1768630391695</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Add duplicate detection criteria options and update folder selection logic">
+      <option name="closed" value="true" />
+      <created>1768663704994</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1768663704994</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Add duplicate detection criteria options and update folder selection logic">
+      <option name="closed" value="true" />
+      <created>1771052168352</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1771052168352</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Add duplicate detection criteria options and update folder selection logic">
+      <option name="closed" value="true" />
+      <created>1771054207573</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1771054207573</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Add duplicate detection criteria options and update folder selection logic">
+      <option name="closed" value="true" />
+      <created>1771054365247</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1771054365247</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Add duplicate detection criteria options and update folder selection logic">
+      <option name="closed" value="true" />
+      <created>1771054388604</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1771054388604</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Add duplicate detection criteria options and update folder selection logic">
+      <option name="closed" value="true" />
+      <created>1771054403815</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1771054403815</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Add duplicate detection criteria options and update folder selection logic">
+      <option name="closed" value="true" />
+      <created>1771054520049</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1771054520049</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Add duplicate detection criteria options and update folder selection logic">
+      <option name="closed" value="true" />
+      <created>1771054562251</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1771054562251</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Add duplicate detection criteria options and update folder selection logic">
+      <option name="closed" value="true" />
+      <created>1771054658927</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1771054658927</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Add duplicate detection criteria options and update folder selection logic">
+      <option name="closed" value="true" />
+      <created>1771054706339</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1771054706339</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Add duplicate detection criteria options and update folder selection logic">
+      <option name="closed" value="true" />
+      <created>1771054857957</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1771054857957</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Add duplicate detection criteria options and update folder selection logic">
+      <option name="closed" value="true" />
+      <created>1771054926739</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1771054926739</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Add duplicate detection criteria options and update folder selection logic">
+      <option name="closed" value="true" />
+      <created>1771055054179</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1771055054179</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Add duplicate detection criteria options and update folder selection logic">
+      <option name="closed" value="true" />
+      <created>1771057083295</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1771057083295</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Add duplicate detection criteria options and update folder selection logic">
+      <option name="closed" value="true" />
+      <created>1771057288912</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1771057288912</updated>
+    </task>
+    <task id="LOCAL-00017" summary="add initial project configuration files and implement duplicate file finder functionality">
+      <option name="closed" value="true" />
+      <created>1771057631309</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1771057631310</updated>
+    </task>
+    <task id="LOCAL-00018" summary="add initial project configuration files and implement duplicate file finder functionality">
+      <option name="closed" value="true" />
+      <created>1771057643226</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1771057643226</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="develop" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
+    <option name="CHECK_NEW_TODO" value="false" />
+    <MESSAGE value="Initial commit" />
+    <MESSAGE value="Add duplicate detection criteria options and update folder selection logic" />
+    <MESSAGE value="add initial project configuration files and implement duplicate file finder functionality" />
+    <option name="LAST_COMMIT_MESSAGE" value="add initial project configuration files and implement duplicate file finder functionality" />
+  </component>
+  <component name="github-copilot-workspace">
+    <instructionFileLocations>
+      <option value=".github/instructions" />
+    </instructionFileLocations>
+    <promptFileLocations>
+      <option value=".github/prompts" />
+    </promptFileLocations>
+  </component>
+</project>
