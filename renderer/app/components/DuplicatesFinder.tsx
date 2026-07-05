@@ -248,6 +248,7 @@ export const DuplicatesFinder = () => {
   const [folderName, setFolderName] = useState<string>("");
   const [isScanning, setIsScanning] = useState(false);
   const [isImporting, setIsImporting] = useState(false);
+  const [loadingMessage, setLoadingMessage] = useState<string>("Select a folder...");
   const [isDeleting, setIsDeleting] = useState(false);
   const [previewFile, setPreviewFile] = useState<PreviewFile | null>(null);
   const [selectedFiles, setSelectedFiles] = useState<Set<string>>(new Set());
@@ -273,18 +274,35 @@ export const DuplicatesFinder = () => {
   };
 
   const handleFolderSelect = async () => {
+    console.log('[DuplicatesFinder] Opening folder picker dialog');
+    setLoadingMessage("Select a folder...");
     setIsImporting(true);
-    const fileList = await window.electronAPI.pickFolder(criteria.byName, criteria.bySize, criteria.byHash)
-    fileList && loadDuplicates(fileList)
+    const fileList = await window.electronAPI.pickFolder(criteria.byName, criteria.bySize, criteria.byHash);
+    if (!fileList) {
+      console.log('[DuplicatesFinder] Folder selection cancelled by user');
+      setIsImporting(false);
+      return;
+    }
+    console.log(`[DuplicatesFinder] Folder selected, starting import...`);
+    setLoadingMessage("Importing files...");
+    loadDuplicates(fileList);
   };
 
   const refreshDuplicates = async () => {
+    console.log(`[DuplicatesFinder] Refreshing duplicates for folder: "${folderName}"`);
+    setLoadingMessage("Importing files...");
     setIsImporting(true);
-    const fileList = await window.electronAPI.refresh(folderName, criteria.byName, criteria.bySize, criteria.byHash)
-    fileList && loadDuplicates(fileList)
+    const fileList = await window.electronAPI.refresh(folderName, criteria.byName, criteria.bySize, criteria.byHash);
+    if (!fileList) {
+      console.log('[DuplicatesFinder] Refresh returned no data');
+      setIsImporting(false);
+      return;
+    }
+    loadDuplicates(fileList);
   }
 
   const loadDuplicates = (fileList: FileList) => {
+    console.log(`[DuplicatesFinder] Loading ${fileList.duplicates.length} files from "${fileList.basePath}"`);
     const fileArray: FileData[] = [];
 
     for (let i = 0; i < fileList.duplicates.length; i++) {
@@ -303,6 +321,7 @@ export const DuplicatesFinder = () => {
     setSelectedFiles(new Set());
     setPreferredFolders(new Set());
     setIsImporting(false);
+    console.log(`[DuplicatesFinder] Import complete: ${fileArray.length} files loaded`);
     toast.success(`Imported ${fileArray.length} files from "${fileList.basePath || "folder"}"`);
   }
 
@@ -496,7 +515,7 @@ export const DuplicatesFinder = () => {
   return (
       <div className="space-y-6 animate-fade-in">
         {/* Loading Overlays */}
-        <LoadingOverlay isLoading={isImporting} message="Importing files..." />
+        <LoadingOverlay isLoading={isImporting} message={loadingMessage} />
         <LoadingOverlay isLoading={isDeleting} message="Deleting duplicates..." />
 
         {/* File Preview Modal */}

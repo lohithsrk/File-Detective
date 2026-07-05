@@ -41,14 +41,26 @@ function createWindow() {
 }
 
 ipcMain.handle('pick-folder', async (_, compareByName, compareBySize, compareByHash) => {
+  console.log('[Main] pick-folder: Opening folder selection dialog');
   const { canceled, filePaths } = await dialog.showOpenDialog({
     properties: ['openDirectory']
   })
-  return canceled ? null : findDuplicates(filePaths[0], compareByName, compareBySize, compareByHash)
+  if (canceled) {
+    console.log('[Main] pick-folder: User cancelled folder selection');
+    return null;
+  }
+  console.log(`[Main] pick-folder: Folder selected: "${filePaths[0]}"`);
+  console.log(`[Main] pick-folder: Scanning with criteria - byName: ${compareByName}, bySize: ${compareBySize}, byHash: ${compareByHash}`);
+  const result = await findDuplicates(filePaths[0], compareByName, compareBySize, compareByHash);
+  console.log(`[Main] pick-folder: Scan complete, found ${result?.duplicates?.length ?? 0} files`);
+  return result;
 })
 
 ipcMain.handle('refresh', async (_, basePath, compareByName, compareBySize, compareByHash) => {
-  return findDuplicates(basePath, compareByName, compareBySize, compareByHash)
+  console.log(`[Main] refresh: Re-scanning folder "${basePath}"`);
+  const result = await findDuplicates(basePath, compareByName, compareBySize, compareByHash);
+  console.log(`[Main] refresh: Scan complete, found ${result?.duplicates?.length ?? 0} files`);
+  return result;
 })
 
 ipcMain.handle('delete-files', async (_, baseFolder, files) => {
